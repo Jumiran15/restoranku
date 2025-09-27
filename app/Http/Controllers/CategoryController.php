@@ -8,46 +8,46 @@ use App\Models\Category;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar kategori.
      */
     public function index()
     {
-        // Fetch all categories from the database
+        // Ambil semua kategori dari database
         $categories = Category::all();
 
-        // Return the view with the categories
+        // Tampilkan view dengan data kategori
         return view('admin.category.index', compact('categories'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk membuat kategori baru.
      */
     public function create()
     {
-        // Return the view to create a new category
+        // Tampilkan view untuk membuat kategori baru
         return view('admin.category.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan kategori baru ke database.
      */
     public function store(Request $request)
     {
-        // Validate the request data
+        // Validasi data yang dikirimkan
         $request->validate([
             'cat_name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
         ]);
 
-        // Create a new category
+        // Buat kategori baru
         Category::create($request->all());
 
-        // Redirect to the categories index with a success message
-        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        // Redirect ke halaman daftar kategori dengan pesan sukses
+        return redirect()->route('categories.index')->with('success', 'Kategori berhasil dibuat.');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail kategori tertentu.
      */
     public function show(string $id)
     {
@@ -55,46 +55,47 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form untuk mengedit kategori tertentu.
      */
     public function edit(string $id)
     {
-        // Fetch the category by ID
+        // Ambil kategori berdasarkan ID
         $category = Category::findOrFail($id);
 
-        // Return the view to edit the category
+        // Tampilkan view untuk mengedit kategori
         return view('admin.category.edit', compact('category'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui kategori di database.
      */
     public function update(Request $request, string $id)
     {
-        // Validate the request data
+        // Validasi data yang dikirimkan
         $request->validate([
             'cat_name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
         ]);
 
-        // Find the category by ID and update it
+        // Cari kategori berdasarkan ID dan update
         $category = Category::findOrFail($id);
         $category->update($request->all());
 
-        // Redirect to the categories index with a success message
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        // Redirect ke halaman daftar kategori dengan pesan sukses
+        return redirect()->route('categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus kategori dari database.
      */
     public function destroy(string $id)
     {
-        // Find the category by ID and delete it
+        // Cari kategori berdasarkan ID dan hapus
         $category = Category::findOrFail($id);
         $category->delete();
 
-        // Redirect to the categories index with a success message
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+        // Redirect ke halaman daftar kategori dengan pesan sukses
+        return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }
+
